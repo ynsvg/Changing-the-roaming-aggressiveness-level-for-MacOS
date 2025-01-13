@@ -4,7 +4,7 @@ read -p "Хочешь изменить агрессивность(1) или ве
 
 if [ $par_choise == "1" ]; then
 read -p "Выбери значение агрессивности роуминга Wi-Fi (1-4; 1 - наименьшая агрессивность, 4 - наибольшая): " aggressiveness_level
-
+dasdasdads
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int $aggressiveness_level
 
 sudo ifconfig en0 down
@@ -22,4 +22,3 @@ sudo ifconfig en0 up
 echo "Готово!"
 
 fi
-
