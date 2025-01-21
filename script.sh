@@ -1,24 +1,55 @@
 #!/bin/bash
 
-read -p "Хочешь изменить агрессивность(1) или вернуть настройки по умолчанию(2)? (1/2): " par_choise
+#read -p "Хочешь изменить агрессивность(1) или вернуть настройки по умолчанию(2)? (1/2): " par_choise
 
-if [ $par_choise == "1" ]; then
-read -p "Выбери значение агрессивности роуминга Wi-Fi (1-4; 1 - наименьшая агрессивность, 4 - наибольшая): " aggressiveness_level
+#if [ $par_choise == "1" ]; then
+#read -p "Выбери значение агрессивности роуминга Wi-Fi (1-4; 1 - наименьшая агрессивность, 4 - наибольшая): " aggressiveness_level
 
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int $aggressiveness_level
+#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int $aggressiveness_level
 
-sudo ifconfig en0 down
-sudo ifconfig en0 up
+#sudo ifconfig en0 down
+#sudo ifconfig en0 up
 
-echo "Готово!"
-fi
+#echo "Готово!"
+#fi
 
-if [ $par_choise == "2" ]; then
-sudo defaults delete /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel
+#case par_choice in
+   # 1) sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int 1
+   # ;;
+   # 2) sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int 2
+  #  ;;
+  #  3) sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int 3
+    #;;
+   # 4) sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int 4
+   # ;;
+#esac
 
-sudo ifconfig en0 down
-sudo ifconfig en0 up
+PS3='Выберите операцию: '
 
-echo "Готово!"
+select choice in "Изменить агрессивность роуминга" "Вернуть настройки по умолчанию" "Выйти"; do
+    case $choice in
+        "Изменить агрессивность роуминга") read -p "Выбери значение агрессивности роуминга Wi-Fi (1-4; 1 - наименьшая агрессивность, 4 - наибольшая): " aggressiveness_level
+        sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel -int $aggressiveness_level
+        sudo ifconfig en0 down
+        sudo ifconfig en0 up
+        echo "Готово!"
+        break;;
+        
+        "Вернуть настройки по умолчанию") sudo defaults delete /Library/Preferences/SystemConfiguration/com.apple.airport.preferences AggressivenessLevel
+        ;;
+        "Выйти")
+        break;;
+    
+    
+    *) echo "Выберите другое значение";;
+    esac
+    done
 
-fi
+
+
+#sudo ifconfig en0 down
+#sudo ifconfig en0 up
+
+#echo "Готово!"
+
+#fi
